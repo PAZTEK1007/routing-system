@@ -1,11 +1,12 @@
 <?php
-
 namespace App\Controller;
 
 use App\Data\DataBaseManager;
+use App\Model\Article;
 
 class ArticleController
 {
+
     protected $PDO;
 
     const ERROR_DB_CONNECTION = "Database connection is not initialized.";
@@ -90,7 +91,27 @@ class ArticleController
             $rawArticle['publish_date']
         );
     }
+    private function createArticle()
+    {
+        if(isset($_POST['submit'])){
 
+            $title = $_POST['title'];
+            $description = $_POST['description'];
+            $author = $_POST['author'];
+            $authorId = $_POST['authorId'];
+            $imgSrc = $_POST['imgSrc'];
+            $dateTime = new \DateTime();
+            $date = $dateTime->format('Y-m-d H:i:s');
+
+            $sql = "INSERT INTO articles (title, description, author, authorId, img_src, publish_date) VALUES (:title, :description, :author, :authorId, :img_src, :publish_date)";
+            $result = $this->PDO->prepare($sql);
+            $result->execute(['title' => $title, 'description' => $description, 'author' => $author, 'authorId' => $authorId, 'img_src' => $imgSrc, 'publish_date' => $date]);
+
+            if (!$result) {
+                throw new Exception(self::ERROR_QUERY_EXECUTION);
+            }
+        }
+    }
     public function show()
     {
         // TODO: this can be used for a detail page
@@ -104,6 +125,12 @@ class ArticleController
         $article = $this->getArticleById($articleId);
 
         require 'View/articles/show.php';
+    }
+
+    public function create()
+    {
+        $article = $this->createArticle();
+        require 'View/articles/create.php';
     }
 }
 ?>

@@ -27,16 +27,21 @@ $page = $_GET['page'] ?? null;
 
 // Load the controller
 // It will *control* the rest of the work to load the page
-switch ($page) {
+switch ($page) 
+{
     case 'articles':
         $articleController = new ArticleController();
         $articleController->index();
         break;
    
     case 'articles-show':
-        // TODO: detail page
         $articleController = new ArticleController();
         $articleController->show();
+        break;
+
+    case 'articles-create':
+        $articleController = new ArticleController();
+        $articleController->create();
         break;
 
     case 'authors':
@@ -50,7 +55,7 @@ switch ($page) {
         break;
 
     case 'home':
-    default:
-        (new HomepageController())->index();
+        $homepageController = new HomepageController();
+        $homepageController->index();
         break;
 }

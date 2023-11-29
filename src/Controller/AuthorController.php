@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Data\DataBaseManager;
+use App\Model\Author;
+use App\Model\Article;
 
 class AuthorController
 {

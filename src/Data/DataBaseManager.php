@@ -24,8 +24,8 @@ class DataBaseManager
     {
         try 
         {
-            $this->link = new PDO('mysql:host=' . $this->url . ';dbname=' . $this->dbName . ';charset=utf8', $this->user, $this->password);
-            $this->link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->link = new \PDO('mysql:host=' . $this->url . ';dbname=' . $this->dbName . ';charset=utf8', $this->user, $this->password);
+            $this->link->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             return $this->link;
             
         } 
