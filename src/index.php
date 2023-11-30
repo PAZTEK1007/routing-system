@@ -43,6 +43,16 @@ switch ($page)
         $articleController = new ArticleController();
         $articleController->create();
         break;
+        
+    case 'articles-update':
+        $articleController = new ArticleController();
+        $articleController->update();
+        break;
+
+    case 'articles-delete':
+        $articleController = new ArticleController();
+        $articleController->delete();
+        break;
 
     case 'authors':
         $authorController = new AuthorController();

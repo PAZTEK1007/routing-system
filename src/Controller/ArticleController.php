@@ -112,6 +112,39 @@ class ArticleController
             }
         }
     }
+    public function updateArticle($articleId)
+    {
+        // Check if the form is submitted
+        if (isset($_POST['submit'])) {
+            $title = $_POST['title'] ?? '';
+            $description = $_POST['description'] ?? '';
+            $author = $_POST['author'] ?? '';
+            $authorId = $_POST['authorId'] ?? '';
+            $imgSrc = $_POST['imgSrc'] ?? '';
+
+            // Perform the update operation
+            $sql = "UPDATE articles SET title = :title, description = :description, author = :author, img_src = :img_src WHERE id = :id";
+            $result = $this->PDO->prepare($sql);
+            $result->execute([
+                'title' => $title,
+                'description' => $description,
+                'author' => $author,
+                'img_src' => $imgSrc,
+                'id' => $articleId
+            ]);
+
+            if (!$result) {
+                throw new Exception(self::ERROR_QUERY_EXECUTION);
+            }
+        }
+
+        // Retrieve the updated article
+        $updatedArticle = $this->getArticleById($articleId);
+
+        return $updatedArticle;
+    }
+    
+
     public function show()
     {
         // TODO: this can be used for a detail page
@@ -130,7 +163,40 @@ class ArticleController
     public function create()
     {
         $article = $this->createArticle();
+
         require 'View/articles/create.php';
+    }
+    public function update()
+    {
+        $articleId = $_GET['id'] ?? null;
+        
+        if ($articleId === null) {
+            throw new Exception(self::ERROR_ARTICLE_ID_MISSING);
+        }
+
+        $updatedArticle = $this->updateArticle($articleId);
+
+        // Pass the updated article to the update.php view
+        require 'View/articles/update.php';
+
+    }
+    public function delete()
+    {
+        $articleId = $_GET['id'] ?? null;
+        
+        if ($articleId === null) {
+            throw new Exception(self::ERROR_ARTICLE_ID_MISSING);
+        }
+
+        $sql = "DELETE FROM articles WHERE id = :id";
+        $result = $this->PDO->prepare($sql);
+        $result->execute(['id' => $articleId]);
+
+        if (!$result) {
+            throw new Exception(self::ERROR_QUERY_EXECUTION);
+        }
+
+        header('Location: ?page=articles');
     }
 }
 ?>

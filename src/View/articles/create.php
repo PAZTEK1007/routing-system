@@ -1,8 +1,5 @@
 <?php require 'View/includes/header.php'?>
 
-<?php
-
-?>
 <form method="post" action="">
     <h1>Create Article</h1>
     <label for="title">Title</label>

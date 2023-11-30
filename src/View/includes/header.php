@@ -14,6 +14,9 @@
                 <a href="index.php">Home</a>
             </li>
             <li>
+                <a href="index.php?page=articles-create">Create Article</a>
+            </li>
+            <li>
                 <a href="index.php?page=articles">Articles</a>
             </li>
             <li>

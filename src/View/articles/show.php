@@ -28,6 +28,8 @@
     <p>Publish Date: <?php echo $articlePublishDate; ?></p>
     <a href="?page=articles-show&id=<?php echo $articlePrevious; ?>">Previous article</a>
     <a href="?page=articles-show&id=<?php echo $articleNext; ?>">Next article</a>
+    <a href="?page=articles-update&id=<?php echo $articleId; ?>">Update article</a>
+    <a href="?page=articles-delete&id=<?php echo $articleId; ?>">Delete article</a>
 </section>
 
 <?php require 'View/includes/footer.php'?>
