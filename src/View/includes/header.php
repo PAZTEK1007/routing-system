@@ -11,16 +11,16 @@
     <header>
         <ul>
             <li>
-                <a href="index.php">Home</a>
+                <a href="/">Home</a>
             </li>
             <li>
-                <a href="index.php?page=articles-create">Create Article</a>
+                <a href="/articles/create">Create Article</a>
             </li>
             <li>
-                <a href="index.php?page=articles">Articles</a>
+                <a href="/articles">Articles</a>
             </li>
             <li>
-                <a href="index.php?page=authors">Authors</a>
+                <a href="/authors">Authors</a>
             </li>
         </ul>
     </header>

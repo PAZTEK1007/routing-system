@@ -12,7 +12,8 @@ class Author
     private $dateOfBirth;
     private $description;
 
-    public function __construct(
+    public function __construct
+    (
         $id,
         $username,
         $name,
@@ -20,7 +21,8 @@ class Author
         $picture,
         $dateOfBirth,
         $description,
-    ) {
+    ) 
+    {
         $this->id = $id;
         $this->username = $username;
         $this->name = $name;

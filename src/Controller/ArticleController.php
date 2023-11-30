@@ -31,23 +31,27 @@ class ArticleController
 
     private function getArticles()
     {
-        if (!$this->PDO) {
+        if (!$this->PDO) 
+        {
             throw new Exception(self::ERROR_DB_CONNECTION);
         }
 
         $sql = "SELECT * FROM articles";
         $result = $this->PDO->query($sql);
 
-        if (!$result) {
+        if (!$result) 
+        {
             throw new Exception(self::ERROR_QUERY_EXECUTION);
         }
 
         $rawArticles = $result->fetchAll();
         $articles = [];
 
-        foreach ($rawArticles as $rawArticle) {
-            // We are converting an article from a "dumb" array to a much more flexible class
-            $articles[] = new Article(
+        foreach ($rawArticles as $rawArticle) 
+        {    
+
+            $articles[] = new Article
+            (
                 $rawArticle['id'],
                 $rawArticle['title'],
                 $rawArticle['description'],
@@ -63,7 +67,8 @@ class ArticleController
 
     private function getArticleById($articleId)
     {
-        if (!$this->PDO) {
+        if (!$this->PDO) 
+        {
             throw new Exception(self::ERROR_DB_CONNECTION);
         }
 
@@ -71,17 +76,20 @@ class ArticleController
         $result = $this->PDO->prepare($sql);
         $result->execute(['id' => $articleId]);
 
-        if (!$result) {
+        if (!$result) 
+        {
             throw new Exception(self::ERROR_QUERY_EXECUTION);
         }
 
         $rawArticle = $result->fetch();
 
-        if (!$rawArticle) {
+        if (!$rawArticle) 
+        {
             throw new Exception(self::ERROR_ARTICLE_NOT_FOUND);
         }
 
-        return new Article(
+        return new Article
+        (
             $rawArticle['id'],
             $rawArticle['title'],
             $rawArticle['description'],
@@ -93,7 +101,8 @@ class ArticleController
     }
     private function createArticle()
     {
-        if(isset($_POST['submit'])){
+        if(isset($_POST['submit']))
+        {
 
             $title = $_POST['title'];
             $description = $_POST['description'];
@@ -114,18 +123,18 @@ class ArticleController
     }
     public function updateArticle($articleId)
     {
-        // Check if the form is submitted
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['submit'])) 
+        {
             $title = $_POST['title'] ?? '';
             $description = $_POST['description'] ?? '';
             $author = $_POST['author'] ?? '';
             $authorId = $_POST['authorId'] ?? '';
             $imgSrc = $_POST['imgSrc'] ?? '';
 
-            // Perform the update operation
             $sql = "UPDATE articles SET title = :title, description = :description, author = :author, img_src = :img_src WHERE id = :id";
             $result = $this->PDO->prepare($sql);
-            $result->execute([
+            $result->execute
+            ([
                 'title' => $title,
                 'description' => $description,
                 'author' => $author,
@@ -133,12 +142,12 @@ class ArticleController
                 'id' => $articleId
             ]);
 
-            if (!$result) {
+            if (!$result) 
+            {
                 throw new Exception(self::ERROR_QUERY_EXECUTION);
             }
         }
 
-        // Retrieve the updated article
         $updatedArticle = $this->getArticleById($articleId);
 
         return $updatedArticle;
@@ -151,7 +160,8 @@ class ArticleController
 
         $articleId = $_GET['id'] ?? null;
 
-        if ($articleId === null) {
+        if ($articleId === null) 
+        {
             throw new Exception(self::ERROR_ARTICLE_ID_MISSING);
         }
 
@@ -170,13 +180,13 @@ class ArticleController
     {
         $articleId = $_GET['id'] ?? null;
         
-        if ($articleId === null) {
+        if ($articleId === null) 
+        {
             throw new Exception(self::ERROR_ARTICLE_ID_MISSING);
         }
 
         $updatedArticle = $this->updateArticle($articleId);
 
-        // Pass the updated article to the update.php view
         require 'View/articles/update.php';
 
     }
@@ -184,7 +194,8 @@ class ArticleController
     {
         $articleId = $_GET['id'] ?? null;
         
-        if ($articleId === null) {
+        if ($articleId === null) 
+        {
             throw new Exception(self::ERROR_ARTICLE_ID_MISSING);
         }
 
@@ -192,7 +203,8 @@ class ArticleController
         $result = $this->PDO->prepare($sql);
         $result->execute(['id' => $articleId]);
 
-        if (!$result) {
+        if (!$result) 
+        {
             throw new Exception(self::ERROR_QUERY_EXECUTION);
         }
 
